@@ -1,3 +1,4 @@
+<h1>How to Compile+Play</h1>
 **WINDOWS ONLY!!**
 
 -If you for some reason want to play this, all you have to do is put the source files into a folder and run "gcc main.c map.c -o maze".
