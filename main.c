@@ -7,6 +7,7 @@
 #define DOWN 1
 #define LEFT 2
 #define RIGHT 3
+#define PLAYER 2
 
 
 int get_kb_input()
@@ -25,7 +26,7 @@ int main()
 
     struct MapData demo_map = {
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,PLAYER,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,1,1,1,1,1,1,1,1,0,1,1,0,1,
         1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,
         1,0,0,1,1,1,1,1,1,1,1,0,1,0,0,1,
@@ -40,16 +41,16 @@ int main()
         1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 
-    }; // The 2 in [1][1] is the player
+    };
 
     render_map(demo_map.map_arrangement);
 
     while(1)
     {
         int kb_input = get_kb_input();
-        uint8_t moved = 0; // flag to check if player moved
+        uint8_t moved = 0; // Flag to check if player moved
 
-        // remove player from old position
+        // Remove player from old position
         demo_map.map_arrangement[player_y][player_x] = 0;
 
         if (kb_input == 'w')
@@ -76,10 +77,10 @@ int main()
             if (new_x != player_x) { player_x = new_x; moved = 1; }
         }
 
-        // put player back
+        // Place player back in OG position
         demo_map.map_arrangement[player_y][player_x] = 2;
 
-        // only redraw if player actually moved
+        // Redraw map only if player moved
         if (moved)
         {
             system("cls");
