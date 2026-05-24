@@ -15,6 +15,8 @@ int get_kb_input()
     {
         return _getch();
     }
+
+    return 0; // No input
 }
 
 int main()
@@ -25,7 +27,7 @@ int main()
 
     struct MapData demo_map = {
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        1,P,0,3,3,3,3,3,3,3,3,0,0,0,0,1,
+        1,P,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,1,1,1,1,1,1,1,1,0,1,1,0,1,
         1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,
         1,0,0,1,1,1,1,1,1,1,1,0,1,0,0,1,
@@ -51,8 +53,60 @@ int main()
 
         // Remove player from old position
         demo_map.map_arrangement[player_y][player_x] = 0;
+        
+        switch (kb_input)
+        {
+            case 'w':
+                {
+                    uint8_t new_y = move_player_y(demo_map.map_arrangement, player_y, player_x, UP);
 
-        if (kb_input == 'w')
+                    if (new_y != player_y) 
+                    { 
+                        player_y = new_y;
+                         moved = 1; 
+                    }
+
+                    break;
+                }
+            case 's':
+                {
+                    uint8_t new_y = move_player_y(demo_map.map_arrangement, player_y, player_x, DOWN);
+
+                    if (new_y != player_y) 
+                    { 
+                        player_y = new_y; 
+                        moved = 1; 
+                    }
+
+                    break;
+                }
+            case 'a':
+                {
+                    uint8_t new_x = move_player_x(demo_map.map_arrangement, player_x, player_y, LEFT);
+
+                    if (new_x != player_x) 
+                    { 
+                        player_x = new_x; 
+                        moved = 1; 
+                    }
+
+                    break;
+                }
+            case 'd':
+                {
+                    uint8_t new_x = move_player_x(demo_map.map_arrangement, player_x, player_y, RIGHT);
+
+                    if (new_x != player_x) 
+                    { 
+                        player_x = new_x; 
+                        moved = 1; 
+                    
+                    }
+                    break;
+                }
+        }
+
+        /*if (kb_input == 'w')
         {
             uint8_t new_y = move_player_y(demo_map.map_arrangement, player_y, player_x, UP);
             if (new_y != player_y) { player_y = new_y; moved = 1; }
@@ -74,7 +128,7 @@ int main()
         {
             uint8_t new_x = move_player_x(demo_map.map_arrangement, player_x, player_y, RIGHT);
             if (new_x != player_x) { player_x = new_x; moved = 1; }
-        }
+        }*/
 
         // Place player back in OG position
         demo_map.map_arrangement[player_y][player_x] = 2;
